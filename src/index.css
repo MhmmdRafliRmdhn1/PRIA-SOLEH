@@ -2,6 +2,98 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Entrance: independent of the museum canvas and its pointer controls. */
+.welcome-page {
+  height: 100%; overflow: auto; color: #eee9dd;
+  background: radial-gradient(ellipse at 19% 65%, #30271955, transparent 55%), #0c0f12;
+  padding: 0 clamp(24px, 5vw, 88px);
+}
+.welcome-header { max-width: 1320px; margin: auto; padding: 30px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid #ffffff0c; }
+.welcome-brand { color: #e5c779; text-decoration: none; display: flex; align-items: center; gap: 12px; font: 700 19px 'Cinzel', serif; letter-spacing: .08em; }
+.brand-symbol { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ba9b4e60; border-radius: 12px; }
+.welcome-brand small { display: block; font: 9px 'Plus Jakarta Sans', sans-serif; letter-spacing: .21em; color: #8c9297; margin-top: 5px; }
+.heritage-badge { display: flex; align-items: center; gap: 7px; padding: 8px 12px; color: #a4b89d; border: 1px solid #7b9a6c33; border-radius: 30px; font-size: 11px; }
+.welcome-layout { max-width: 1210px; min-height: calc(100% - 180px); margin: auto; padding: 50px 0; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(340px, 0.87fr); gap: clamp(36px, 6vw, 105px); align-items: center; }
+.welcome-eyebrow, .entry-eyebrow { color: #c2a86b; font-size: 10px; font-weight: 600; letter-spacing: .19em; }
+.welcome-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+.welcome-eyebrow > span { width: 22px; height: 1px; background: #cfb268; }
+.welcome-story h1 { font-family: 'Cinzel', Georgia, serif; font-weight: 500; font-size: clamp(32px, 3.7vw, 56px); line-height: 1.25; letter-spacing: -.04em; }
+.welcome-story h1 em { font-style: normal; color: #dcbd71; }
+.welcome-description { max-width: 490px; margin-top: 20px; font-size: 13px; line-height: 1.95; color: #a0a29f; }
+.gallery-art { position: relative; isolation: isolate; height: 255px; margin-top: 34px; border: 1px solid #c1a56530; border-radius: 120px 120px 12px 12px; overflow: hidden; background: radial-gradient(ellipse at 50% 15%, #c5a45a22, transparent 55%), #151716; box-shadow: inset 0 0 70px #0008; }
+.gallery-arch { position: absolute; width: 26%; height: 72%; left: 37%; bottom: 22%; border: 1px solid #ba9a4c50; border-radius: 100px 100px 0 0; background: linear-gradient(#39312055, #090d0d); box-shadow: 0 0 0 12px #c8ae6820, 0 0 0 13px #c8ae6825; }
+.gallery-floor { position: absolute; inset: 58% -60% -90%; background: repeating-linear-gradient(90deg, transparent 0 78px, #cfb36720 79px 80px), repeating-linear-gradient(0deg, #191c1b 0 38px, #cfb36720 39px 40px); transform: perspective(100px) rotateX(25deg); }
+.gallery-carpet { position: absolute; width: 52%; height: 60%; bottom: 0; left: 24%; background: linear-gradient(90deg, #8c7239, #4b1f21 4%, #6b2429 50%, #4b1f21 96%, #8c7239); clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%); }
+.gallery-pillar { position: absolute; width: 5%; height: 88%; top: -8%; background: linear-gradient(90deg, #474032, #232823); border-right: 2px solid #e2c47b30; box-shadow: 8px 0 20px #0004; }
+.pillar-one { left: 12%; }.pillar-two { right: 12%; }.pillar-three { left: 29%; height: 75%; width: 3%; }.pillar-four { right: 29%; height: 75%; width: 3%; }
+.art-display { position: absolute; top: 35%; width: 18%; height: 45%; border-bottom: 8px solid #2b2922; background: linear-gradient(transparent 80%, #151716 80%); }
+.display-left { left: 16%; transform: rotate(-8deg); }.display-right { right: 16%; transform: rotate(8deg); }
+.textile { position: relative; margin: auto; width: 65%; height: 80%; border: 3px solid #9d8244; box-shadow: 0 0 28px #dbbd5122; }
+.textile-red { background: repeating-conic-gradient(#ad8448 0% 25%, #713e32 0% 50%) 0 0 / 13px 13px; }
+.textile-blue { background: repeating-conic-gradient(#73918b 0% 25%, #273d40 0% 50%) 0 0 / 11px 11px; }
+.art-display > span { position: absolute; top: 100%; padding-top: 5px; width: 100%; text-align: center; font-size: 5px; letter-spacing: .1em; color: #c5b990; }
+.gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px; background: linear-gradient(transparent, #0a0c0fee); display: flex; align-items: center; gap: 7px; font-size: 8px; letter-spacing: .15em; color: #e2d3ae; }
+.gallery-caption > span:last-child { margin-left: auto; color: #a6a8a3; font-size: 9px; letter-spacing: 0; }
+.live-dot { width: 5px; height: 5px; border-radius: 50%; background: #bfa36a; box-shadow: 0 0 10px #dbb763; }
+.entry-card { padding: clamp(26px, 3.3vw, 46px); border: 1px solid #c2a35b32; border-radius: 22px; background: linear-gradient(145deg, #202321aa, #121719); box-shadow: 0 24px 80px #0003; }
+.entry-icon { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 16px; color: #dbc17f; border: 1px solid #bba16445; background: #d1ac520b; margin-bottom: 27px; }
+.entry-eyebrow { font-size: 9px; letter-spacing: .16em; }
+.entry-card h2 { margin-top: 13px; font: 500 clamp(25px, 2.2vw, 33px)/1.35 'Cinzel', Georgia, serif; letter-spacing: -.025em; }
+.entry-description { color: #9fa6a3; font-size: 12px; line-height: 1.9; margin: 15px 0 28px; }
+.name-label { display: block; font-size: 12px; font-weight: 500; margin-bottom: 9px; }
+.visitor-input { display: flex; gap: 11px; align-items: center; padding: 0 15px; height: 52px; border: 1px solid #ffffff24; border-radius: 9px; color: #898e89; background: #0b0f1166; transition: border-color .2s; }
+.visitor-input:focus-within { border-color: #d0b36f; box-shadow: 0 0 0 3px #c6a76615; }
+.visitor-input input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: #eee9dd; font: inherit; font-size: 13px; user-select: text; -webkit-user-select: text; }
+.visitor-input input::placeholder { color: #737c7c; }
+.visitor-input.has-error { border-color: #e99487; }
+.entry-error { font-size: 11px; color: #efaa9e; margin-top: 8px; }
+.remember-name { display: flex; align-items: center; gap: 8px; margin: 17px 0 24px; font-size: 11px; color: #a0a8a4; cursor: pointer; }
+.remember-name input { width: 14px; height: 14px; accent-color: #d8b669; cursor: pointer; }
+.enter-museum { width: 100%; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e6cb8c; border-radius: 9px; padding: 16px 20px; background: linear-gradient(110deg, #e2c789, #c9a455); color: #1d211e; font: 700 13px 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: filter .2s, transform .2s; }
+.enter-museum:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.enter-museum:active { transform: translateY(0); }
+.welcome-page :focus-visible, .museum-return:focus-visible { outline: 2px solid #e4c981; outline-offset: 5px; }
+.entry-note { font-size: 10px; line-height: 1.9; text-align: center; color: #858f8a; margin-top: 18px; }
+.entry-divider { height: 1px; background: #ffffff0e; margin: 25px 0 20px; }
+.entry-features { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; color: #a5aeaa; font-size: 9px; }
+.entry-features span { display: flex; align-items: center; gap: 7px; }
+.entry-features svg { color: #b5a16d; }
+.welcome-footer { display: flex; justify-content: space-between; gap: 12px; max-width: 1320px; margin: auto; padding: 20px 0; border-top: 1px solid #ffffff0c; font-size: 10px; color: #737e79; }
+.museum-loading { display: flex; height: 100%; padding: 24px; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 18px; background: #0c1013; color: #dbc17f; }
+.museum-loading h1 { font: 500 23px 'Cinzel', serif; }
+.museum-loading p { color: #a0a8a4; font-size: 13px; }
+.loading-spinner { animation: entrance-spin 1s linear infinite; }
+@keyframes entrance-spin { to { transform: rotate(360deg); } }
+.museum-return { position: fixed; z-index: 40; bottom: 22px; right: 24px; max-width: calc(100vw - 48px); display: flex; gap: 8px; align-items: center; padding: 11px 15px; border: 1px solid #bba16460; border-radius: 10px; color: #ddc17b; background: #0c0f16eb; font: 500 12px 'Plus Jakarta Sans', sans-serif; cursor: pointer; }
+.museum-return > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 800px) {
+  .welcome-layout { grid-template-columns: 1fr; gap: 32px; max-width: 520px; padding: 36px 0; }
+  .welcome-header { padding: 20px 0; }
+  .welcome-story h1 { font-size: 39px; }
+  .welcome-description { font-size: 12px; }
+  .gallery-art { height: 190px; margin-top: 24px; }
+  .entry-card { padding: 28px; }
+  .entry-card h2 br { display: none; }
+  .entry-icon { margin-bottom: 20px; }
+  .welcome-footer { flex-direction: column; line-height: 1.7; }
+  .museum-return { bottom: auto; top: 78px; right: 12px; max-width: 180px; }
+  .museum-visitor { display: none; }
+}
+@media (max-width: 450px) {
+  .welcome-brand { font-size: 14px; gap: 9px; }
+  .welcome-brand small { font-size: 7px; }
+  .brand-symbol { width: 36px; height: 36px; }
+  .heritage-badge { padding: 6px 8px; font-size: 0; gap: 0; }
+  .welcome-story h1 { font-size: 33px; }
+  .welcome-eyebrow { font-size: 8px; letter-spacing: .12em; }
+  .gallery-caption { padding: 14px 10px; font-size: 7px; }
+  .gallery-caption > span:last-child { font-size: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .enter-museum { transition: none; }
+  .loading-spinner { animation: none; }
+}
+
 @keyframes pulseGlow {
   0%, 100% {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(212, 175, 55, 0.35);
