@@ -122,8 +122,9 @@ export const ATMOS_FRAG = /* glsl */ `
   varying vec3 vN;
   varying vec3 vV;
   void main() {
-    float f = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 3.2);
-    float a = f * (0.85 + 0.15 * sin(uTime * 1.4));
+    float d = clamp(abs(dot(normalize(vN), normalize(vV))), 0.0, 1.0);
+    float f = pow(1.0 - d, 3.2);
+    float a = clamp(f * (0.85 + 0.15 * sin(uTime * 1.4)), 0.0, 1.0);
     gl_FragColor = vec4(uColor * a, a);
   }
 `;

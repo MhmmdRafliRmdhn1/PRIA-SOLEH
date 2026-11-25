@@ -132,15 +132,18 @@ export const App: React.FC = () => {
       onContextMenu={(e) => e.preventDefault()}
     >
       <Canvas
-        shadows
+        shadows="soft"
         dpr={QUALITY.dpr}
         gl={{
           antialias: true,
           powerPreference: 'high-performance',
-          toneMapping: THREE.NeutralToneMapping,
-          toneMappingExposure: 1.0
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.0,
+          stencil: false,
+          depth: true,
+          logarithmicDepthBuffer: false
         }}
-        camera={{ fov: 62, near: 0.1, far: 140 }}
+        camera={{ fov: 62, near: 0.5, far: 140 }}
         style={{ width: '100%', height: '100%' }}
       >
         <Physics gravity={[0, -20, 0]}>
