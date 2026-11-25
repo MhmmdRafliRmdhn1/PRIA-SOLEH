@@ -4,12 +4,14 @@ Museum virtual 3D futuristik bernuansa putih & emas. Jelajahi lima pulau Indones
 
 **Stack:** React 18 · TypeScript · Vite · Three.js · React Three Fiber · Drei · Rapier
 
-## Menjalankan
+## Menjalankan (Wajib menggunakan pnpm)
 ```bash
-npm install
-npm run dev        # pengembangan
-npm run build      # produksi (tsc + vite)
+pnpm install
+pnpm dev        # pengembangan (jalankan web)
+pnpm build      # produksi (tsc + vite)
+pnpm preview    # pratinjau hasil build produksi
 ```
+Atau cukup klik dua kali file `start.bat` di Windows Explorer.
 Parameter URL: `?quality=high|low` memaksa profil kualitas (pantulan lantai nyata hanya di `high`).
 Mode dev saja: `?globe=sumatera` memaksa target globe untuk debugging.
 

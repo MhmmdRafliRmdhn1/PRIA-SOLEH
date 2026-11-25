@@ -167,3 +167,32 @@ export function createNamePlateTexture(title: string, subtitle: string): THREE.C
   }
   return tex;
 }
+
+// Backward-compatibility exports for legacy components
+export function createBatikParangTexture(): THREE.CanvasTexture {
+  return createWhiteMarbleTexture();
+}
+export function createSongketTexture(): THREE.CanvasTexture {
+  return createWhiteMarbleTexture();
+}
+export function createTenunIkatSumbaTexture(): THREE.CanvasTexture {
+  return createWhiteMarbleTexture();
+}
+export function createBatikMegamendungTexture(): THREE.CanvasTexture {
+  return createWhiteMarbleTexture();
+}
+export function createTenunTorajaTexture(): THREE.CanvasTexture {
+  return createWhiteMarbleTexture();
+}
+export function createGoldTrimTexture(): THREE.CanvasTexture {
+  return createWallPanelTexture();
+}
+export function createDarkWallTexture(): THREE.CanvasTexture {
+  return createWallPanelTexture();
+}
+export function createMarbleFloorTexture(): THREE.CanvasTexture {
+  return createWhiteMarbleTexture();
+}
+export function createRedCarpetTexture(): THREE.CanvasTexture {
+  return createWhiteMarbleTexture();
+}
