@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import * as THREE from 'three';
 import { RigidBody, CylinderCollider } from '@react-three/rapier';
-import { MeshReflectorMaterial } from '@react-three/drei';
 import { HALL } from '../../../config/layout';
 import { QUALITY } from '../../../config/quality';
 import { createWhiteMarbleTexture } from '../../../utils/textures';
-import { mergeParts, matrixOf } from '../../../utils/mergeGeo';
+import { mergeParts } from '../../../utils/mergeGeo';
 import { useHallMaterials } from './materials';
 
 /** Cincin datar pada bidang lantai (inlay emas). */
@@ -32,6 +31,22 @@ export const Floor: React.FC = () => {
     return mergeParts(parts);
   }, []);
 
+  /* ── Material lantai: glossy standard — tidak pakai MeshReflectorMaterial ──
+   * MeshReflectorMaterial menggunakan render-target internal yang dapat menghasilkan
+   * piksel NaN / hitam saat kamera bergerak cepat akibat depth-buffer race condition.
+   * Efek kilauan tetap didapat dari envMapIntensity tinggi + roughness rendah. */
+  const floorMat = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        map: marble,
+        color: '#ffffff',
+        roughness: QUALITY.isLowEnd ? 0.35 : 0.14,
+        metalness: 0.08,
+        envMapIntensity: QUALITY.isLowEnd ? 0.8 : 1.6
+      }),
+    [marble]
+  );
+
   return (
     <group>
       {/* Lantai fisik: silinder tebal agar collider padat */}
@@ -42,25 +57,7 @@ export const Floor: React.FC = () => {
       {/* Lantai marmer putih glossy */}
       <mesh rotation-x={-Math.PI / 2} receiveShadow>
         <circleGeometry args={[HALL.radius, 128]} />
-        {QUALITY.reflectiveFloor ? (
-          <MeshReflectorMaterial
-            map={marble}
-            color="#ffffff"
-            resolution={QUALITY.reflectorResolution}
-            blur={[40, 12]}
-            mixBlur={0.5}
-            mixStrength={1.15}
-            mixContrast={1}
-            mirror={0.75}
-            depthScale={0}
-            minDepthThreshold={0.35}
-            maxDepthThreshold={1.3}
-            roughness={0.12}
-            metalness={0.04}
-          />
-        ) : (
-          <meshStandardMaterial map={marble} roughness={0.16} metalness={0.06} envMapIntensity={1.2} />
-        )}
+        <primitive object={floorMat} />
       </mesh>
 
       <mesh geometry={inlay} material={mats.gold} />

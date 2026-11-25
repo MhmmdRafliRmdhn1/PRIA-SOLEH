@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Compass } from 'lucide-react';
 import { HALL, ZONES, GLOBE } from '../../config/layout';
 import { ISLANDS } from '../../data/islands';
@@ -10,20 +10,60 @@ const SIZE = 140;
 const SCALE = (SIZE / 2 - 8) / HALL.radius;
 const toMap = (x: number, z: number) => ({ mx: SIZE / 2 + x * SCALE, my: SIZE / 2 + z * SCALE });
 
-/** Denah melingkar. Posisi pemain diambil dari playerState pada ~10 Hz, bukan per-frame. */
+/** Selisih sudut terpendek dalam derajat [-180, 180). */
+function shortestAngleDiff(target: number, current: number): number {
+  return ((((target - current) % 360) + 540) % 360) - 180;
+}
+
+/** Denah melingkar. Posisi & arah hadap pemain diinterpolasi halus via rAF tanpa re-render React. */
 export const Minimap: React.FC = () => {
-  const [pos, setPos] = useState({ x: playerState.position.x, z: playerState.position.z, yaw: 0 });
+  const indicatorRef = useRef<SVGGElement>(null);
+  const initialPos = toMap(playerState.position.x, playerState.position.z);
+  const initialDeg = (Math.atan2(playerState.heading.x, -playerState.heading.z) * 180) / Math.PI;
+  const smoothRef = useRef({ mx: initialPos.mx, my: initialPos.my, deg: initialDeg });
+
   const active = useMuseum((s) => s.activeZone);
   const target = useMuseum((s) => s.globeTarget);
 
   useEffect(() => {
-    const id = window.setInterval(() => {
-      setPos({ x: playerState.position.x, z: playerState.position.z, yaw: playerState.cameraYaw });
-    }, 100);
-    return () => window.clearInterval(id);
+    let rafId = 0;
+    let lastTime = performance.now();
+
+    const tick = (now: number) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+
+      const el = indicatorRef.current;
+      if (el) {
+        const { x: px, z: pz } = playerState.position;
+        const { x: hx, z: hz } = playerState.heading;
+
+        if (isFinite(px) && isFinite(pz) && isFinite(hx) && isFinite(hz)) {
+          const { mx: tx, my: ty } = toMap(px, pz);
+          const targetDeg = (Math.atan2(hx, -hz) * 180) / Math.PI;
+          const cur = smoothRef.current;
+
+          const posAlpha = 1 - Math.exp(-dt * 14);
+          const rotAlpha = 1 - Math.exp(-dt * 12);
+
+          cur.mx += (tx - cur.mx) * posAlpha;
+          cur.my += (ty - cur.my) * posAlpha;
+          cur.deg += shortestAngleDiff(targetDeg, cur.deg) * rotAlpha;
+
+          el.setAttribute(
+            'transform',
+            `translate(${cur.mx.toFixed(2)} ${cur.my.toFixed(2)}) rotate(${cur.deg.toFixed(2)})`
+          );
+        }
+      }
+
+      rafId = window.requestAnimationFrame(tick);
+    };
+
+    rafId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(rafId);
   }, []);
 
-  const p = toMap(pos.x, pos.z);
   const c = toMap(GLOBE.position[0], GLOBE.position[2]);
 
   return (
@@ -56,7 +96,10 @@ export const Minimap: React.FC = () => {
             </g>
           );
         })}
-        <g transform={`translate(${p.mx} ${p.my}) rotate(${(-pos.yaw * 180) / Math.PI + 180})`}>
+        <g
+          ref={indicatorRef}
+          transform={`translate(${initialPos.mx.toFixed(2)} ${initialPos.my.toFixed(2)}) rotate(${initialDeg.toFixed(2)})`}
+        >
           <circle r="4.5" fill="#c4161c" stroke="#fff" strokeWidth="1.5" />
           <polygon points="0,-9 -3.5,-4 3.5,-4" fill="#c4161c" />
         </g>

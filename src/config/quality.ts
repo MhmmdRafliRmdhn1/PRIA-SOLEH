@@ -8,8 +8,12 @@ const forced = typeof window !== 'undefined' ? new URLSearchParams(window.locati
 const low = forced === 'high' ? false : forced === 'low' ? true : isTouch || cores <= 4;
 
 export const QUALITY = {
-  /** Lantai memantulkan scene secara nyata (mahal) — dimatikan di perangkat lemah. */
-  reflectiveFloor: !low,
+  /**
+   * Lantai reflektif dimatikan sepenuhnya untuk mencegah glitch NaN/black pixels
+   * yang disebabkan MeshReflectorMaterial depth-buffer race condition.
+   * Efek kilauan tetap didapat dari MeshStandardMaterial envMapIntensity tinggi.
+   */
+  reflectiveFloor: false,
   reflectorResolution: 512,
   dpr: (low ? [1, 1.5] : [1, 2]) as [number, number],
   shadowMapSize: low ? 1024 : 2048,

@@ -45,14 +45,14 @@ export const Lighting: React.FC = () => {
         castShadow
         shadow-mapSize-width={QUALITY.shadowMapSize}
         shadow-mapSize-height={QUALITY.shadowMapSize}
-        shadow-camera-near={1}
-        shadow-camera-far={60}
-        shadow-camera-left={-13}
-        shadow-camera-right={13}
-        shadow-camera-top={13}
-        shadow-camera-bottom={-13}
-        shadow-bias={-0.0004}
-        shadow-normalBias={0.04}
+        shadow-camera-near={0.5}
+        shadow-camera-far={80}
+        shadow-camera-left={-18}
+        shadow-camera-right={18}
+        shadow-camera-top={18}
+        shadow-camera-bottom={-18}
+        shadow-bias={-0.0003}
+        shadow-normalBias={0.05}
       />
 
       {/* cahaya hangat di sekitar plaza */}

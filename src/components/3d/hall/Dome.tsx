@@ -38,9 +38,10 @@ const SHAFT_FRAG = /* glsl */ `
   void main() {
     // vUv.y: 0 = bawah (lantai), 1 = atas (skylight)
     float along = pow(vUv.y, 1.6);
-    float edge = pow(abs(dot(normalize(vNormalW), normalize(vViewDir))), 1.4);
+    float d = clamp(abs(dot(normalize(vNormalW), normalize(vViewDir))), 0.0, 1.0);
+    float edge = pow(d, 1.4);
     float shimmer = 0.9 + 0.1 * sin(uTime * 0.6 + vUv.x * 12.0);
-    float a = along * edge * 0.2 * shimmer;
+    float a = clamp(along * edge * 0.2 * shimmer, 0.0, 1.0);
     gl_FragColor = vec4(uColor * a, a);
   }
 `;
